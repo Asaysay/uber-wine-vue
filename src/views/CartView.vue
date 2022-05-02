@@ -56,14 +56,9 @@
     <div class="row pt-2 text-right justify-content-end align-items-center">
       <div class="col-4 input-group">
         <label type="text" style="margin-right: 2rem">Email</label>
-        <input
-          class="form-control mr-1"
-          type="email"
-          v-model="mail"
-          required
-        />
+        <input class="form-control mr-1" type="email" v-model="mail" required />
       </div>
-         <div class="col-5 input-group">
+      <!-- <div class="col-5 input-group">
         <label type="text" style="margin-right: 2rem">Point de livraison</label>
          <select class="form-control" v-model="id_address" required>
               <option
@@ -74,7 +69,7 @@
                 {{ address.address }}
               </option>
             </select>
-         </div>
+         </div> -->
       <!-- <router-link> -->
       <button class="col-3 btn btn-primary" @click="passOrder">
         Commander
@@ -85,15 +80,15 @@
 </template>
 <script>
 import axios from "axios";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 export default {
   data() {
     return {
       cartItems: [],
-      addresses:[],
+      addresses: [],
       totalCost: 0,
       mail: null,
-      id_address: null
+      id_address: null,
     };
   },
   props: ["baseURL", "products"],
@@ -121,42 +116,48 @@ export default {
         .map((prod) => prod.id_product)
         .indexOf(id_product);
       this.totalCost =
-        this.totalCost - this.cartItems[indexToRemove].total_price;
+        (Math.round((this.totalCost - this.cartItems[indexToRemove].total_price)+ Number.EPSILON) * 100) / 100;
       this.cartItems.splice(indexToRemove, 1);
       sessionStorage.setItem("cart", JSON.stringify(this.cartItems));
     },
 
     async passOrder() {
-        const newOrder = {
-            mailCustomer: this.mail,
-            deliveryPoint: this.id_address,
-            products: this.cartItems,
-            totalCost: this.totalCost
-        };
+      const newOrder = {
+        mailCustomer: this.mail,
+        products: this.cartItems,
+        totalCost: this.totalCost,
+      };
 
-        const u = new URLSearchParams(newOrder).toString();
+      console.log(newOrder);
 
-        await axios({
-          method: "post",
-          url: `${this.baseURL}products?${u}`,
-          headers: {
-            "Content-Type": "text/plain",
-          },
-        })
-          .then(() => {
-            this.$router.push({ name: "AdminProducts" });
-            swal({
-              text: "Produit ajouté",
-              icon: "success",
-            });
-          })
-          .catch((err) => console.log(err));
+       swal({
+       text: `Votre commande a été prise en compte et envoyée à l'adresse mail : ${newOrder.mailCustomer}, nous reviendrons vers vous pour les modalités de paiement afin de la finaliser` ,
+        icon: "success",
+        });
+
+     // const u = new URLSearchParams(newOrder).toString();
+
+      //  await axios({
+      //    method: "post",
+      //     url: `${this.baseURL}products?${u}`,
+      //     headers: {
+      //     "Content-Type": "text/plain",
+      // },
+      // })
+      // .then(() => {
+      // this.$router.push({ name: "AdminProducts" });
+      // swal({
+      // text: "Produit ajouté",
+      //  icon: "success",
+      //  });
+      //  })
+      //  .catch((err) => console.log(err));
     },
 
     async getAddresses() {
       await axios
         .get(this.baseURL + "addresses/")
-        .then((resp) => this.addresses = resp.data);
+        .then((resp) => (this.addresses = resp.data));
     },
   },
 

@@ -5,7 +5,7 @@
         <div class="col-md-1"></div>
         <!-- afficher image produit -->
         <div class="col-md-4 col-12">
-          <img :src="product.picture" class="img-fluid" />
+          <img src="../../assets/photos_vins_champagnes/beaujolais_villages_chateau_de_montmelas.jpeg" class="img-fluid" />
         </div>
         <!-- afficher les détails du produit -->
         <div class="col-md-6 col-12 pt-3 pt-md-0">

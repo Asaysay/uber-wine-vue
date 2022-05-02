@@ -26,7 +26,7 @@
 </template>
 <script>
 import axios from "axios";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 export default {
   props: ["baseURL"],
   data() {
@@ -36,24 +36,33 @@ export default {
     };
   },
   methods: {
-   async signin(e) {
+    async signin(e) {
       e.preventDefault();
-      const body = {
-        email: this.email,
-        password: this.password,
-      };
-      await axios.post(`${this.baseURL}user/signIn`, body)
-      .then(() => {
-          this.$router.replace('/');
-          swal({
-              text: "Connecté",
-              icon: "success"
-          })
+           const body = {
+           email: this.email,
+            password: this.password,
+       };
+   const u = new URLSearchParams(body).toString();
+
+      await axios({
+        method: "post",
+        url: `${this.baseURL}customers/login?${u}`,
+        headers: {
+          "Content-Type": "text/plain"
+        },
       })
-      .catch((err)=> console.log(err));
-    },
+            .then(() => {
+               this.$router.replace('/');
+      swal({
+        text: "Connecté",
+        icon: "success",
+      });
+      //   })
+      //    .catch((err)=> console.log(err));
+    })
   },
-};
+}
+}
 </script>
 
 <style>

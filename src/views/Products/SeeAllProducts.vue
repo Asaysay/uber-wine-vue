@@ -19,7 +19,7 @@
       >
         <h6>Filtres</h6>
         <div id="categoryCheckboxes">
-          <h6>Catégorie</h6>
+          <h6><span style="font-weight:bold">Catégorie</span></h6>
           <div
             v-for="(category, index) in filters"
             :key="index"
@@ -38,25 +38,9 @@
             </div>
           </div>
         </div>
-        <!-- à revoir -->
-        <!-- <div id="priceCheckboxes">
-          <h6>Prix</h6>
-          <div v-for="(price, index) in filters" :key="index" class="form-check">
-            <div v-if="pricecategory == 'price'">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                v-model="prix.checked"
-                @change="getFilteredData()"
-              />
-              <label class="form-check-label">
-                {{ prix.name }}
-              </label>
-            </div>
-          </div>
-        </div> -->
+ 
         <div id="familyCheckboxes">
-          <h6>Maison</h6>
+          <h6><span style="font-weight:bold">Maison</span></h6>
           <div
             v-for="(house, index) in filters"
             :key="index"
@@ -76,7 +60,7 @@
           </div>
         </div>
         <div id="yearCheckboxes">
-          <h6>Année</h6>
+          <h6><span style="font-weight:bold">Année</span></h6>
           <div
             v-for="(bottled_year, index) in filters"
             :key="index"

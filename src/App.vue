@@ -10,6 +10,7 @@
     :suppliers="suppliers"
     :families="families"
     :cartCounter="cartCounter"
+    :isConnected="isConnected"
     @fetchData="fetchData"
   >
   </router-view>
@@ -20,19 +21,18 @@
 import NavBar from "@/components/NavBar";
 import axios from "axios";
 import FooterComponent from "./components/FooterComponent.vue";
-// import dataCategories from '@/data/dataCategories/dataCategoriesOffline'
-// import dataProducts from '@/data/dataProducts/dataProductsOffline'
 export default {
   components: { NavBar, FooterComponent },
   data() {
     return {
-      //   baseURL : "https://limitless-lake-55070.herokuapp.com/",
       baseURL: "https://localhost:5001/",
       products: null,
       categories: null,
       families: null,
       suppliers: null,
       cartCounter: null,
+
+      isConnected: true,
     };
   },
   methods: {
@@ -86,6 +86,11 @@ export default {
       return;
     } else {
       sessionStorage.setItem("cart", "[]");
+    }
+    if (sessionStorage.getItem("isConnected")) {
+      return;
+    } else {
+      sessionStorage.setItem("isConnected", "'false'");
     }
   },
 };

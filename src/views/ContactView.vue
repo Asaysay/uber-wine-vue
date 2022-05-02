@@ -67,6 +67,9 @@ export default {
 
       window.open(`mailto:uberwine33@gmail.com?subject=Contact&body=${contact.message}`);
     },
+
+
+    
   },
 };
 </script>

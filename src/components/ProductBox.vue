@@ -3,7 +3,7 @@
     <div class="embed-responsive embed-responsive-16by9">
       <img
         class="card-img-top embed-responsive-item"
-        :src="`../assets/photos_vins_champagnes/${product.picture}`"
+        src="../assets/photos_vins_champagnes/beaujolais_villages_chateau_de_montmelas.jpeg"
         alt="Card image"
       />
     </div>
